@@ -1,0 +1,24 @@
+import { Link } from 'react-router-dom'
+
+export default function Header() {
+  return (
+    <div className='bg-violet-600 text-white'>
+        <div className="flex justify-between items-center mas-w-6xl mx-auto p-8">
+            <Link to='/'>
+                <h1 className='font-bold text-6xl'>Auth App</h1>
+            </Link>
+            <ul className='flex gap-4 text-3xl'>
+                <Link to='/'>
+                    <li>Home</li>
+                </Link>
+                <Link to='/about'>
+                    <li>About</li>
+                </Link>
+                <Link to='/sign-in'>
+                    <li>Sign In</li>
+                </Link>
+            </ul>
+        </div>
+    </div>
+  )
+}
