@@ -43,7 +43,7 @@ export default function signUp() {
 
   return (
     <div className="bg-gray-800  z-0 absolute bg-cover bg-center bg-no-repeat top-0 w-screen h-screen flex justify-center items-center">
-      <div className='absolute w-4/12 h-2/3 drop-shadow-4xl left-60 top-20'>
+      <div className='absolute w-4/12 h-2/3 drop-shadow-4xl left-60 top-20 mix-blend-overlay'>
         <svg viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg" style={{ filter: "url(#drop-shadow)" }}>
         <defs>
             <filter id="drop-shadow" height="130%">
@@ -76,7 +76,7 @@ export default function signUp() {
         </svg>
       </div>
     
-      <div className='absolute w-4/12 h-2/3 drop-shadow-2xl right-96 bottom-0'>
+      <div className='absolute w-4/12 h-2/3 drop-shadow-4xl right-96 bottom-0 mix-blend-overlay'>
         <svg viewBox="0 0 170 170" xmlns="http://www.w3.org/2000/svg" style={{ filter: "url(#drop-shadow2)" }}>
         <defs>
             <filter id="drop-shadow2" height="130%">
@@ -114,9 +114,9 @@ export default function signUp() {
 
         <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
 
-          <input type="text" placeholder='Username' id='username' className='bg-slate-100 p-3 rounded-lg'onChange={handleChange}/>
-          <input type="text" placeholder='Email' id='email' className='bg-slate-100 p-3 rounded-lg'onChange={handleChange}/>
-          <input type="password" placeholder='Password' id='password' className='bg-slate-100 p-3 rounded-lg'onChange={handleChange}/>
+          <input type="text" placeholder='Username' id='username' className='bg-zinc-800 text-slate-100 p-3 rounded-lg'onChange={handleChange}/>
+          <input type="text" placeholder='Email' id='email' className='bg-zinc-800 text-slate-100 p-3 rounded-lg'onChange={handleChange}/>
+          <input type="password" placeholder='Password' id='password' className='bg-zinc-800 text-slate-100 p-3 rounded-lg'onChange={handleChange}/>
 
             <button disabled={loading} className="text-xl text-slate-100 relative px-6 py-3 text-center w-1/1 transition-all ease-out disabled:opacity-60
             bg-indigo-950 rounded-md duration-400 hover:scale-95 hover:ease-linear hover:duration-75 hover:bg-gray-900 hover:italic">{loading? 'Loading...' : 'Sign Up'}

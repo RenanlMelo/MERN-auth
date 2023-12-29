@@ -11,7 +11,7 @@ module.exports = {
       },
 
       dropShadow: {
-        '4xl': '0 45px 65px rgba(0, 0, 0, 0.15)',
+        '4xl': '0 0 15px rgba(255, 255, 255, 1)',
       },
       
       keyframes: {
