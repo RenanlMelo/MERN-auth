@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 document.body.style.overflow = "hidden";
 import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import OAuth from '../components/OAuth';
 
 export default function signIn() {
 
@@ -117,15 +118,15 @@ export default function signIn() {
           <input type="text" placeholder='Email' id='email' className='bg-zinc-800 text-slate-100 p-3 rounded-lg'onChange={handleChange}/>
           <input type="password" placeholder='Password' id='password' className='bg-zinc-800 text-slate-100 p-3 rounded-lg'onChange={handleChange}/>
 
-            <button disabled={loading} className="text-xl text-slate-100 relative px-6 py-3 text-center w-1/1 transition-all ease-out disabled:opacity-60
-            bg-indigo-950 rounded-md duration-400 hover:scale-95 hover:ease-linear hover:duration-75 hover:bg-gray-900 hover:italic">{loading? 'Loading...' : 'Sign In'}
+            <button disabled={loading} className="text-xl text-slate-100 relative px-6 py-3 text-center w-1/1 transition-all ease-out disabled:opacity-60 scale-95
+            bg-indigo-950 rounded-md hover:scale-100 hover:ease-linear hover:duration-75 hover:bg-gray-900 hover:italic hover:shadow-inset hover:drop-shadow-light">{loading? 'Loading...' : 'Sign In'}
             </button>
-           
+           <OAuth />
 
         </form>
         <div className='flex gap-2 mt-5'>
           <p className='text-slate-100'>Don't have an account?</p>
-          <Link to='/sign-in'>
+          <Link to='/sign-up'>
             <span className='text-blue-500 font-semibold'>Sign-Up</span>
           </Link>
         </div>

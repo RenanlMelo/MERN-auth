@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import OAuth from '../components/OAuth';
 document.body.style.overflow = "hidden";
 
 export default function signUp() {
@@ -69,8 +70,8 @@ export default function signUp() {
         </path>
           <defs>
               <linearGradient id="gradiente" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style={{ stopColor: "#940eb0", stopOpacity: 1 }} />
-                <stop offset="100%" style={{ stopColor: "#3682da", stopOpacity: 1 }} />
+                <stop offset="0%" style={{ stopColor: "#3682da", stopOpacity: 1 }} />
+                <stop offset="100%" style={{ stopColor: "#ff00bb", stopOpacity: 1 }} />
               </linearGradient>
             </defs>
         </svg>
@@ -109,7 +110,7 @@ export default function signUp() {
         </svg>
       </div>
 
-      <div className='p-6 max-w-xl w-1/2 h-3/6 bg-white bg-opacity-10 relative z-20 shadow-5xl rounded-2xl backdrop-blur-sm'>
+      <div className='px-6  max-w-xl max-h-form w-1/2 h-4/6 bg-white bg-opacity-10 relative z-20 shadow-5xl rounded-2xl backdrop-blur-sm'>
         <h1 className="text-4xl text-center font-semibold my-7 pb-3 text-slate-100">Sign Up</h1>
 
         <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
@@ -118,10 +119,10 @@ export default function signUp() {
           <input type="text" placeholder='Email' id='email' className='bg-zinc-800 text-slate-100 p-3 rounded-lg'onChange={handleChange}/>
           <input type="password" placeholder='Password' id='password' className='bg-zinc-800 text-slate-100 p-3 rounded-lg'onChange={handleChange}/>
 
-            <button disabled={loading} className="text-xl text-slate-100 relative px-6 py-3 text-center w-1/1 transition-all ease-out disabled:opacity-60
-            bg-indigo-950 rounded-md duration-400 hover:scale-95 hover:ease-linear hover:duration-75 hover:bg-gray-900 hover:italic">{loading? 'Loading...' : 'Sign Up'}
+            <button disabled={loading} className="text-xl text-slate-100 relative px-6 py-3 text-center w-1/1 transition-all ease-out disabled:opacity-60 scale-95 
+            bg-indigo-950 rounded-md hover:scale-100 hover:ease-linear hover:duration-75 hover:bg-gray-900 hover:italic hover:opacity-85 hover:shadow-inset hover:drop-shadow-light">{loading? 'Loading...' : 'Sign Up'}
             </button>
-           
+           <OAuth />
 
         </form>
         <div className='flex gap-2 mt-5'>

@@ -8,10 +8,17 @@ module.exports = {
       boxShadow: {
         '5xl': '20px 20px 50px rgba(0, 0, 0, 0.5)',
         'under': '0px 0px 25px rgba(0, 0, 0, 0.5)',
+        'inset': 'inset 0 0 15px 0 rgba(0, 0, 0, 0.75)',
+      },
+      
+      dropShadow: {
+        'light': '0 0 20px rgba(255, 255, 255, 0.2)',
+        '4xl': '0 0 15px rgba(255, 255, 255, 1)',
+        'inset2': 'inset 0 0 15px 0 rgba(0, 0, 0, 0.75)',
       },
 
-      dropShadow: {
-        '4xl': '0 0 15px rgba(255, 255, 255, 1)',
+      maxHeight: {
+        'form': '500px',
       },
       
       keyframes: {
