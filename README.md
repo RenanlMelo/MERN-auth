@@ -1,5 +1,5 @@
 # MERN-authentication
 
-#  MongoDB, Express, React and Node authauthentication app.
+MongoDB, Express, React and Node authentication app.
 
 
