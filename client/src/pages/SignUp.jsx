@@ -6,7 +6,7 @@ document.body.style.overflow = "hidden";
 export default function signUp() {
 
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -28,13 +28,14 @@ export default function signUp() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+      console.log(data);
       setLoading(false);
       if(data.success === false){
         setError(true);
         return;
       }
 
-      navigate('/');
+      navigate('/sign-in');
 
     } catch (error) {
       setLoading(false);
@@ -43,8 +44,8 @@ export default function signUp() {
   };
 
   return (
-    <div className="bg-gray-800  z-0 absolute bg-cover bg-center bg-no-repeat top-0 w-screen h-screen flex justify-center items-center">
-      <div className='absolute w-4/12 h-2/3 drop-shadow-4xl left-60 top-20 mix-blend-overlay'>
+    <div className="bg-gray-950  z-0 absolute bg-cover bg-center bg-no-repeat top-0 w-screen h-screen flex justify-center items-center">
+      <div className='absolute w-4/12 h-2/3 drop-shadow-4xl left-60 top-20 mix-blend-hard-light opacity-80'>
         <svg viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg" style={{ filter: "url(#drop-shadow)" }}>
         <defs>
             <filter id="drop-shadow" height="130%">
@@ -70,14 +71,14 @@ export default function signUp() {
         </path>
           <defs>
               <linearGradient id="gradiente" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style={{ stopColor: "#3682da", stopOpacity: 1 }} />
+                <stop offset="0%" style={{ stopColor: "#81b4f0", stopOpacity: 1 }} />
                 <stop offset="100%" style={{ stopColor: "#ff00bb", stopOpacity: 1 }} />
               </linearGradient>
             </defs>
         </svg>
       </div>
     
-      <div className='absolute w-4/12 h-2/3 drop-shadow-4xl right-96 bottom-0 mix-blend-overlay'>
+      <div className='absolute w-4/12 h-2/3 drop-shadow-4xl right-96 bottom-0 mix-blend-hard-light opacity-80'>
         <svg viewBox="0 0 170 170" xmlns="http://www.w3.org/2000/svg" style={{ filter: "url(#drop-shadow2)" }}>
         <defs>
             <filter id="drop-shadow2" height="130%">
@@ -103,8 +104,8 @@ export default function signUp() {
         </path>
         <defs>
               <linearGradient id="gradiente2" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style={{ stopColor: "#19db96", stopOpacity: 1 }} />
-                <stop offset="100%" style={{ stopColor: "#b10fd2", stopOpacity: 1 }} />
+                <stop offset="0%" style={{ stopColor: "#64e3b6", stopOpacity: 1 }} />
+                <stop offset="100%" style={{ stopColor: "#f05dd7", stopOpacity: 1 }} />
               </linearGradient>
             </defs>
         </svg>

@@ -6,15 +6,14 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        '5xl': '20px 20px 50px rgba(0, 0, 0, 0.5)',
+        '5xl': '0 0 50px rgba(0, 0, 0, .7)',
         'under': '0px 0px 25px rgba(0, 0, 0, 0.5)',
         'inset': 'inset 0 0 15px 0 rgba(0, 0, 0, 0.75)',
       },
       
       dropShadow: {
-        'light': '0 0 20px rgba(255, 255, 255, 0.2)',
+        'light': '0 0 5px rgba(255, 255, 255, 1)',
         '4xl': '0 0 15px rgba(255, 255, 255, 1)',
-        'inset2': 'inset 0 0 15px 0 rgba(0, 0, 0, 0.75)',
       },
 
       maxHeight: {

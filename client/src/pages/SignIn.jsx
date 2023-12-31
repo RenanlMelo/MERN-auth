@@ -16,9 +16,8 @@ export default function signIn() {
     setFormData({...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       dispatch(signInStart());
       const res = await fetch('/api/auth/signin', {
@@ -29,22 +28,20 @@ export default function signIn() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if(data.success === false){
+      if (data.success === false) {
         dispatch(signInFailure(data));
         return;
       }
-      
       dispatch(signInSuccess(data));
       navigate('/');
-
     } catch (error) {
       dispatch(signInFailure(error));
     }
   };
 
   return (
-    <div className="bg-gray-800  z-0 absolute bg-cover bg-center bg-no-repeat top-0 w-screen h-screen flex justify-center items-center">
-      <div className='absolute w-4/12 h-2/3 drop-shadow-4xl left-60 top-60 mix-blend-overlay'>
+    <div className="bg-gray-950 z-0 absolute bg-cover bg-center bg-no-repeat top-0 w-screen h-screen flex justify-center items-center">
+      <div className='absolute w-4/12 h-2/3 drop-shadow-4xl left-60 top-60 mix-blend-hard-light opacity-80'>
         <svg viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg" style={{ filter: "url(#drop-shadow)" }}>
         <defs>
             <filter id="drop-shadow" height="130%">
@@ -77,7 +74,7 @@ export default function signIn() {
         </svg>
       </div>
     
-      <div className='absolute w-4/12 h-2/3 drop-shadow-4xl right-60 bottom-72 mix-blend-overlay'>
+      <div className='absolute w-4/12 h-2/3 drop-shadow-4xl right-60 bottom-72 mix-blend-hard-light opacity-80'>
         <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" style={{ filter: "url(#drop-shadow2)" }}>
         <defs>
             <filter id="drop-shadow2" height="130%">
@@ -103,8 +100,8 @@ export default function signIn() {
         </path>
         <defs>
               <linearGradient id="gradiente2" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style={{ stopColor: "#eb3613", stopOpacity: 1 }} />
-                <stop offset="100%" style={{ stopColor: "#8224b5", stopOpacity: 1 }} />
+                <stop offset="0%" style={{ stopColor: "#f2765e", stopOpacity: 1 }} />
+                <stop offset="100%" style={{ stopColor: "#ca77f7", stopOpacity: 1 }} />
               </linearGradient>
             </defs>
         </svg>
@@ -119,11 +116,12 @@ export default function signIn() {
           <input type="password" placeholder='Password' id='password' className='bg-zinc-800 text-slate-100 p-3 rounded-lg'onChange={handleChange}/>
 
             <button disabled={loading} className="text-xl text-slate-100 relative px-6 py-3 text-center w-1/1 transition-all ease-out disabled:opacity-60 scale-95
-            bg-indigo-950 rounded-md hover:scale-100 hover:ease-linear hover:duration-75 hover:bg-gray-900 hover:italic hover:shadow-inset hover:drop-shadow-light">{loading? 'Loading...' : 'Sign In'}
+            bg-indigo-950 rounded-md hover:scale-100 hover:ease-linear hover:duration-75 hover:bg-gray-900 hover:italic hover:shadow-inset hover:drop-shadow-light">{loading ? 'Loading...' : 'Sign In'}
             </button>
            <OAuth />
 
         </form>
+
         <div className='flex gap-2 mt-5'>
           <p className='text-slate-100'>Don't have an account?</p>
           <Link to='/sign-up'>
@@ -134,5 +132,5 @@ export default function signIn() {
       </div>
     </div>
 
-  )
+  );
 }
