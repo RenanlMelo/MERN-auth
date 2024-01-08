@@ -26,7 +26,7 @@ export const signin = async (req, res, next) => {
         if(!validPassword) return next(errorHandler(401, 'Invalid credentials'));
         const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
         const { password: hashedPassword, ...rest } = validUser._doc;
-        const expiryDate = new Date(Date.now() + 2147483647);
+        const expiryDate = new Date(Date.now() + 360000);
         
         res.cookie('access_token', token, { httpOnly: true, expires: expiryDate }).status(200).json(rest);
     } catch (error) {
@@ -40,7 +40,7 @@ export const google = async (req, res, next) => {
         if(user) {
             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
             const { password: hashedPassword, ...rest } = user._doc;
-            const expiryDate = new Date(Date.now() + 2147483647);
+            const expiryDate = new Date(Date.now() + 360000);
 
             res.cookie('access_token', token, { httpOnly: true, expires: expiryDate}).status(200).json(rest);
         } else {                                                    
@@ -51,7 +51,7 @@ export const google = async (req, res, next) => {
             await newUser.save();
 
             const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
-            const expiryDate = new Date(Date.now() + 2147483647);
+            const expiryDate = new Date(Date.now() + 360000);
             res.cookie('access_token', token, { httpOnly: true, expires: expiryDate, }).status(200).json(rest);
         } //else
     } catch (error) {

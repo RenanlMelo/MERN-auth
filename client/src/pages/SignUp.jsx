@@ -121,7 +121,7 @@ export default function signUp() {
           <input type="password" placeholder='Password' id='password' className='bg-zinc-800 text-slate-100 p-3 rounded-lg'onChange={handleChange}/>
 
             <button disabled={loading} className="text-xl text-slate-100 relative px-6 py-3 text-center w-1/1 transition-all ease-out disabled:opacity-60 scale-95 
-            bg-indigo-950 rounded-md hover:scale-100 hover:ease-linear hover:duration-75 hover:bg-gray-900 hover:italic hover:opacity-85 hover:shadow-inset hover:drop-shadow-light">{loading? 'Loading...' : 'Sign Up'}
+            bg-indigo-950 rounded-md hover:scale-100 hover:ease-linear hover:duration-75 hover:bg-gray-900 hover:italic hover:shadow-inset">{loading? 'Loading...' : 'Sign Up'}
             </button>
            <OAuth />
 
