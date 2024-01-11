@@ -8,7 +8,7 @@ export default function profile() {
   const [image, setImage] = useState(undefined);
   const [imagePercent, setImagePercent] = useState(0);
   const [imageError, setImageError] = useState(false);
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState({});
   const { currentUser } = useSelector(state => state.user);
   const [ isOpenPopup, setIsOpenPopup ] = useState({});
 
@@ -116,12 +116,7 @@ export default function profile() {
           
           <div className=' bg-slate-100/15 backdrop-blur-xl w-1/3 h-full absolute top-0 flex justify-center items-center flex-col'>
             <img src={currentUser.profilePicture} alt='Profile Picture' className='absolute top-6 rounded-full w-36 h-36 border-slate-500 border-2 z-10' />
-            {/*<p>
-              { imageError ? (
-                <span className='text-red-700'>Error uploading image</span>) : imagePercent > 0 && imagePercent < 100 ? (
-                  <span className='text-slate-700'>{`'Uploading: ' ${imagePercent} '%`}</span>) : imagePercent === 100 ? (
-                    <span className='text-green-700'>Image uploaded successfully</span>) : ( '' )}
-                  </p>*/}
+           
             <p className='absolute top-3/4 -translate-y-full left-1/2 -translate-x-1/2 text-2xl first-letter:uppercase tracking-wide pb-2'>
               { currentUser.username }
             </p> 
@@ -162,7 +157,13 @@ export default function profile() {
                         request.resource.size < 2 * 1024 * 1024 &&
                         request.resource.contentType.matches('image/.*')
                        */}
-                          <img src={currentUser.profilePicture} alt='profile' onClick={() => fileRef.current.click()} className='top-28 rounded-full w-36 h-36 z-10 cursor-pointer hover:scale-110 transition-all duration-150' />
+                          <img src={formData.profilePicture || currentUser.profilePicture} alt='profile' onClick={() => fileRef.current.click()} className='top-28 rounded-full w-36 h-36 z-10 cursor-pointer hover:scale-110 transition-all duration-150' />
+                          <p>
+                            { imageError ? (
+                              <span className='text-red-500'>Error uploading image</span>) : imagePercent > 0 && imagePercent < 100 ? (
+                                <span className='text-slate-400'>{`'Uploading: ' ${imagePercent} '%`}</span>) : imagePercent === 100 ? (
+                                  <span className='text-green-500'>Image uploaded successfully</span>) : ( '' )}
+                          </p>
                       <input type="text" id='username' placeholder='Username'  defaultValue={ currentUser.username } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
                       <input type="text" id='email' placeholder='Email' defaultValue={ currentUser.email } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
                       <input type="text" placeholder='About Me' defaultValue={''} className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
