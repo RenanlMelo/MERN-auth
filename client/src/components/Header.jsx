@@ -6,7 +6,7 @@ export default function Header() {
     console.log('=========Current User:');
     console.log(currentUser);
   return (
-    <div className='bg-indigo-950 text-white mb-12 w-screen absolute z-10 shadow-under'>
+    <div className='bg-zinc-900 text-white mb-12 w-full absolute z-10 shadow-under'>
         <div className="flex justify-between items-center mas-w-6xl mx-auto p-8">
             <Link to='/'>
                 <h1 className='font-bold text-4xl italic'>Auth App</h1>
