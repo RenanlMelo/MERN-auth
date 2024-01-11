@@ -140,33 +140,35 @@ export default function profile() {
           <div>
               <div id='background' onClick={setIsOpenPopup.bind(this, false)} className='fixed backdrop-blur-md top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-zinc-950/30 z-30'>
           
-                  <form id='form' onClick={(e) => e.stopPropagation() } className={`bg-zinc-800 w-1/4 h-2/3 z-40 rounded-l-xl absolute right-0 overflow-hidden ${ setIsOpenPopup ? 'animate-slideIn' : 'animate-slideOut' }`}>
+                  <form id='form' onClick={(e) => e.stopPropagation() } className={`bg-zinc-800 w-1/4 h-3/4 z-40 rounded-l-xl absolute right-0 overflow-hidden ${ setIsOpenPopup ? 'animate-slideIn' : 'animate-slideOut' }`}>
                   
                       <div onClick={setIsOpenPopup.bind(this, false)} className='bg-zinc-700 box-content aspect-square w-12 rounded-br-xl cursor-pointer z-50 hover:scale-105 transition-all duration-150 hover:bg-zinc-600 hover:translate-x-px hover:translate-y-px'>
                           <svg viewBox="0 0 24 24" width='100%' fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><bg fill='red' /><path d="M18 6L6 18M6 6L18 18" stroke="#101010" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                       </div>
 
-                      <h3 className='absolute text-slate-200 text-4xl top-12 left-1/2 -translate-x-1/2'>Edit Profile</h3>
+                      <h3 className='absolute text-slate-200 text-4xl top-10 left-1/2 -translate-x-1/2'>Edit Profile</h3>
 
-                      <div className='absolute h-4/5 w-full flex justify-evenly items-center flex-col top-24'>
-                      <input type='file' ref={fileRef} hidden accept='image/*' onChange={(e) => setImage(e.target.files[0])}/>
-                      {/*
-                        firebase storage rules: 
-                        allow read;
-                        allow write: if
-                        request.resource.size < 2 * 1024 * 1024 &&
-                        request.resource.contentType.matches('image/.*')
-                       */}
-                          <img src={formData.profilePicture || currentUser.profilePicture} alt='profile' onClick={() => fileRef.current.click()} className='top-28 rounded-full w-36 h-36 z-10 cursor-pointer hover:scale-110 transition-all duration-150' />
-                          <p>
-                            { imageError ? (
-                              <span className='text-red-500'>Error uploading image</span>) : imagePercent > 0 && imagePercent < 100 ? (
-                                <span className='text-slate-400'>{`'Uploading: ' ${imagePercent} '%`}</span>) : imagePercent === 100 ? (
-                                  <span className='text-green-500'>Image uploaded successfully</span>) : ( '' )}
-                          </p>
-                      <input type="text" id='username' placeholder='Username'  defaultValue={ currentUser.username } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
-                      <input type="text" id='email' placeholder='Email' defaultValue={ currentUser.email } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
-                      <input type="text" placeholder='About Me' defaultValue={''} className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
+                      <div className='absolute h-3/4 w-full flex justify-between items-center flex-col top-32'>
+                        <input type='file' ref={fileRef} hidden accept='image/*' onChange={(e) => setImage(e.target.files[0])}/>
+                        {/*
+                          firebase storage rules: 
+                          allow read;
+                          allow write: if
+                          request.resource.size < 2 * 1024 * 1024 &&
+                          request.resource.contentType.matches('image/.*')
+                        */}
+                            <img src={formData.profilePicture || currentUser.profilePicture} alt='profile' onClick={() => fileRef.current.click()} className='top-28 rounded-full w-36 h-36 z-10 cursor-pointer hover:scale-110 transition-all duration-150' />
+                            <p>
+                              { imageError ? (
+                                <span className='text-red-500'>Error uploading image</span>) : imagePercent > 0 && imagePercent < 100 ? (
+                                  <span className='text-slate-400'>{`Uploading: ${imagePercent}%`}</span>) : imagePercent === 100 ? (
+                                    <span className='text-green-500'>Image uploaded successfully</span>) : ( '' )}
+                            </p>
+                        <input type="text" id='username' placeholder='Username'  defaultValue={ currentUser.username } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
+                        <input type="text" id='email' placeholder='Email' defaultValue={ currentUser.email } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
+                        <input type="password" id='password' placeholder='Password' defaultValue={ currentUser.email } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
+                        <input type="text" placeholder='About Me' defaultValue={''} className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
+                        <button type='button' className='w-2/3 h-12 bg-slate-950 rounded-xl text-slate-200 scale-95 hover:bg-slate-900 hover:scale-100 hover:shadow-lightBright transition-all duration-150'>Save Changes</button>
                       </div>
                   
                   </form>
