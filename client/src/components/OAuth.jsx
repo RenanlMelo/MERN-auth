@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { signInSuccess } from '../redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 
-
 export default function OAuth() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -30,7 +29,7 @@ export default function OAuth() {
             dispatch(signInSuccess(data));
             navigate('/');
         } catch (error) {
-            console.log("Could not log with google", error);
+            console.log("Could not login with google", error);
         }
     };
 

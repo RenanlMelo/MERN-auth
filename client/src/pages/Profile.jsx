@@ -2,14 +2,18 @@ import { useSelector } from 'react-redux';
 import { useRef, useState, useEffect } from 'react';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { app } from '../firebase';
+import { useDispatch } from 'react-redux';
+import { updateUserStart, updateUserSuccess, updateUserFailure } from '../redux/user/userSlice';
 
 export default function profile() {
+  const dispatch = useDispatch();
   const fileRef = useRef(null);
   const [image, setImage] = useState(undefined);
   const [imagePercent, setImagePercent] = useState(0);
   const [imageError, setImageError] = useState(false);
   const [formData, setFormData] = useState({});
-  const { currentUser } = useSelector(state => state.user);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const { currentUser, loading, error } = useSelector(state => state.user);
   const [ isOpenPopup, setIsOpenPopup ] = useState({});
 
   useEffect(() => {
@@ -36,7 +40,33 @@ export default function profile() {
     }
     );
   }; 
+  
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value});
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(updateUserStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(updateUserFailure(data));
+        return;
+      }
+      dispatch(updateUserSuccess(data));
+      setUpdateSuccess(true);
+    } catch (error) {
+      dispatch(updateUserFailure(error));
+    }
+  };
 
   return (
     <div>
@@ -127,7 +157,7 @@ export default function profile() {
 
           <div className='absolute w-2/3 h-full right-0 flex justify-center items-center flex-col'>
             <h2 className='absolute text-2xl top-6'>About me</h2>
-            <p className='absolute top-20 text-md bg-slate-100/10 p-4 rounded-xl w-10/12'></p>
+            <p className='absolute top-20 text-md bg-slate-100/10 p-4 rounded-xl w-10/12'>{ currentUser.aboutMe }</p>
             <div className='absolute bottom-0 w-full h-2/6 flex justify-evenly items-center'>
             <button onClick={setIsOpenPopup.bind(this, true)} className='text-xl text-blue-500 border-2 border-blue-600 p-2 opacity-80 rounded-sm font-semibold transition-all duration-200 hover:shadow-edit  hover:scale-110'>Edit Profile</button>
             <button className='text-xl text-red-400 border-2 border-red-500 p-2 opacity-80 rounded-sm font-semibold transition-all duration-200 hover:shadow-singOut hover:scale-110'>Sign Out</button>
@@ -140,7 +170,7 @@ export default function profile() {
           <div>
               <div id='background' onClick={setIsOpenPopup.bind(this, false)} className='fixed backdrop-blur-md top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-zinc-950/30 z-30'>
           
-                  <form id='form' onClick={(e) => e.stopPropagation() } className={`bg-zinc-800 w-1/4 h-3/4 z-40 rounded-l-xl absolute right-0 overflow-hidden ${ setIsOpenPopup ? 'animate-slideIn' : 'animate-slideOut' }`}>
+                  <form onSubmit={handleSubmit} id='form' onClick={(e) => e.stopPropagation() } className={`bg-zinc-800 w-1/4 h-3/4 z-40 rounded-l-xl absolute right-0 overflow-hidden ${ setIsOpenPopup ? 'animate-slideIn' : 'animate-slideOut' }`}>
                   
                       <div onClick={setIsOpenPopup.bind(this, false)} className='bg-zinc-700 box-content aspect-square w-12 rounded-br-xl cursor-pointer z-50 hover:scale-105 transition-all duration-150 hover:bg-zinc-600 hover:translate-x-px hover:translate-y-px'>
                           <svg viewBox="0 0 24 24" width='100%' fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><bg fill='red' /><path d="M18 6L6 18M6 6L18 18" stroke="#101010" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
@@ -164,11 +194,13 @@ export default function profile() {
                                   <span className='text-slate-400'>{`Uploading: ${imagePercent}%`}</span>) : imagePercent === 100 ? (
                                     <span className='text-green-500'>Image uploaded successfully</span>) : ( '' )}
                             </p>
-                        <input type="text" id='username' placeholder='Username'  defaultValue={ currentUser.username } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
-                        <input type="text" id='email' placeholder='Email' defaultValue={ currentUser.email } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
-                        <input type="password" id='password' placeholder='Password' defaultValue={ currentUser.email } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
-                        <input type="text" placeholder='About Me' defaultValue={''} className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
-                        <button type='button' className='w-2/3 h-12 bg-slate-950 rounded-xl text-slate-200 scale-95 hover:bg-slate-900 hover:scale-100 hover:shadow-lightBright transition-all duration-150'>Save Changes</button>
+                        <input onChange={handleChange} type="text" id='username' placeholder='Username'  defaultValue={ currentUser.username } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
+                        <input onChange={handleChange} type="text" id='email' placeholder='Email' defaultValue={ currentUser.email } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
+                        <input onChange={handleChange} type="password" id='password' placeholder='Password' className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
+                        <input onChange={handleChange} type="text" placeholder='About Me' defaultValue={ currentUser.aboutMe } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
+                        <button className='w-2/3 h-12 bg-slate-950 rounded-xl text-slate-200 scale-95 hover:bg-slate-900 hover:scale-100 hover:shadow-lightBright transition-all duration-150'>{ loading ? 'Loading...' : 'Save changes' }</button>
+                        <p className='absolute bottom-0 translate-y-8 text-red-500 mt-5'>{error && 'Something went wrong'}</p>
+                        <p className='absolute bottom-0 translate-y-8 text-green-500 mt-5'>{updateSuccess && 'User is updated successfully'}</p>
                       </div>
                   
                   </form>
