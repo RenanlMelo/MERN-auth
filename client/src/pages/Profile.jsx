@@ -14,7 +14,10 @@ export default function profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const { currentUser, loading, error } = useSelector(state => state.user);
+
   const [ isOpenPopup, setIsOpenPopup ] = useState({});
+
+  const [isVisible, setIsVisible] = useState({ });
 
   useEffect(() => {
     if (image) {
@@ -23,22 +26,23 @@ export default function profile() {
   }, [image]);
   
   const handleFileUpload = async (image) => {
-    const storage = getStorage(app)
-    const fileName = new Date().getTime() + image.name;
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, image);
-    uploadTask.on('state_changed', (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setImagePercent(Math.round(progress));
-    },
-    (error) => {
-      setImageError(true)
-    },
-    () => {
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
-        setFormData({ ...formData, profilePicture: downloadURL }))
-    }
-    );
+      const storage = getStorage(app)
+      const fileName = new Date().getTime() + image.name;
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, image);
+
+      uploadTask.on('state_changed', (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setImagePercent(Math.round(progress));
+      },
+      (error) => {
+        setImageError(true)
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
+          setFormData({ ...formData, profilePicture: downloadURL }))
+      }
+      );
   }; 
   
   const handleChange = (e) => {
@@ -75,8 +79,8 @@ export default function profile() {
       </div>
 
       <div className='absolute top-10 bg-slate-950 flex justify-center items-center w-full h-full'>
-        <div className='absolute w-5/12 h-2/3 drop-shadow-4xl -right-32 top-0 mix-blend-hard-light opacity-80'>
-          <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" style={{ filter: "url(#drop-shadow2)" }}>
+        <div className='absolute w-4/12 drop-shadow-4xl right-0 top-0 mix-blend-hard-light opacity-80'>
+          <svg viewBox="0 0 180 180" width='100%' xmlns="http://www.w3.org/2000/svg" style={{ filter: "url(#drop-shadow2)" }}>
           <defs>
               <filter id="drop-shadow2" height="130%">
                 <feGaussianBlur in="SourceAlpha" stdDeviation="30" />
@@ -90,7 +94,7 @@ export default function profile() {
                 </feMerge>
               </filter>
             </defs>
-          <path fill="url(#gradiente1)" transform="translate(90 90)">
+          <path fill="url(#gradiente1)" width='100%' transform="translate(90 90)">
             <animate attributeName='d' dur='30000ms' repeatCount='indefinite' values='M28.9,-13.3C39,0.7,49.7,17.8,45,33.5C40.3,49.2,20.1,63.5,-4,65.8C-28.1,68.1,-56.1,58.3,-69,37.9C-81.9,17.5,-79.7,-13.6,-65.6,-29.9C-51.6,-46.2,-25.8,-47.8,-8.2,-43C9.4,-38.3,18.8,-27.3,28.9,-13.3Z";
             M45.1,-28.7C51.4,-15,44.7,3.4,35,16.4C25.3,29.3,12.7,36.7,-1,37.3C-14.6,37.8,-29.2,31.6,-39.1,18.5C-49,5.4,-54.3,-14.5,-47,-28.7C-39.7,-43,-19.8,-51.6,-0.2,-51.5C19.4,-51.4,38.7,-42.5,45.1,-28.7Z;
             M38.2,-15.4C48.7,-4,55.7,16.1,48.8,30.8C41.8,45.5,20.9,54.9,1.2,54.2C-18.6,53.5,-37.1,42.9,-42,29.4C-46.8,15.9,-37.8,-0.4,-28.5,-11.1C-19.3,-21.9,-9.6,-27.1,2.1,-28.3C13.9,-29.6,27.8,-26.8,38.2,-15.4Z;
@@ -108,7 +112,7 @@ export default function profile() {
           </svg>
         </div>
 
-        <div className='absolute w-4/12 h-2/3 drop-shadow-4xl -left-24 top-72 mix-blend-hard-light opacity-80'>
+        <div className='absolute w-4/12 h-1/3 drop-shadow-4xl -left-24 top-72 mix-blend-hard-light opacity-80'>
           <svg viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg" style={{ filter: "url(#drop-shadow2)" }}>
           <defs>
               <filter id="drop-shadow2" height="130%">
@@ -163,22 +167,42 @@ export default function profile() {
             <button className='text-xl text-red-400 border-2 border-red-500 p-2 opacity-80 rounded-sm font-semibold transition-all duration-200 hover:shadow-singOut hover:scale-110'>Sign Out</button>
             </div>
           </div>
-
+    
         </div>
 
         {isOpenPopup && 
           <div>
-              <div id='background' onClick={setIsOpenPopup.bind(this, false)} className='fixed backdrop-blur-md top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-zinc-950/30 z-30'>
-          
-                  <form onSubmit={handleSubmit} id='form' onClick={(e) => e.stopPropagation() } className={`bg-zinc-800 w-1/4 h-3/4 z-40 rounded-l-xl absolute right-0 overflow-hidden ${ setIsOpenPopup ? 'animate-slideIn' : 'animate-slideOut' }`}>
+              <div id='background' onClick={setIsOpenPopup.bind(this, false)} className='fixed backdrop-blur-md top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-zinc-950/50 z-30'>
+
+                <div className='font-mono relative h-screen w-screen md:grid-cols-3 row-span-2 grid justify-end items-center'>
+
+                  <div className='relative justify-self-end w-4/5 col-start-3 col-end-3 row-start-1 row-end-1 flex justify-evenly items-center -translate-y-3/4 '>
+                    
+                    {isVisible && 
+
+                      <div className='flex flex-row gap-8'>
+
+                        <div onClick={(e) => {e.stopPropagation() }}>
+                          <div onClick={(e) => {console.log("FOIIIIIIIIIIIII"); setIsVisible.bind(this, false); console.log(setIsVisible) }} className={`h-12 w-48 flex justify-center items-center bg-zinc-900 text-slate-200 rounded-t-xl hover:scale-110 transition-all shadow-bottom hover:shadow-none ${ setIsOpenPopup ? 'animate-slideIn' : 'animate-slideOut' }`}>Delete account</div>
+                           <div className={`slide-container bg-slate-500 w-96 h-96 absolute left-0 -translate-x-full ${ setIsVisible ? 'animate-slideOut' : 'animate-slideIn'}`}>Test</div>
+                        </div>
+                        
+                        <div className={`h-12 w-48 flex justify-center items-center bg-zinc-900 text-slate-200 rounded-t-xl hover:scale-110 transition-all shadow-bottom hover:shadow-none ${ setIsOpenPopup ? 'animate-slideIn' : 'animate-slideOut' }`}>Change Password</div>
+                      
+                      </div>
+                    }
+
+                  </div>
+
+                  <form onSubmit={handleSubmit} id='form' onClick={(e) => e.stopPropagation() } className={`bg-zinc-900 justify-self-end w-4/5 h-2/3 z-40 rounded-l-xl col-start-3 col-end-3 row-start-1 row-end-4 relative overflow-hidden ${ setIsOpenPopup ? 'animate-slideIn' : 'animate-slideOut' }`}>
                   
-                      <div onClick={setIsOpenPopup.bind(this, false)} className='bg-zinc-700 box-content aspect-square w-12 rounded-br-xl cursor-pointer z-50 hover:scale-105 transition-all duration-150 hover:bg-zinc-600 hover:translate-x-px hover:translate-y-px'>
+                      <div onClick={setIsOpenPopup.bind(this, false)} className='bg-zinc-700 box-content aspect-square w-9 rounded-br-xl cursor-pointer z-50 hover:scale-105 transition-all duration-150 hover:bg-zinc-600 hover:translate-x-px hover:translate-y-px'>
                           <svg viewBox="0 0 24 24" width='100%' fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><bg fill='red' /><path d="M18 6L6 18M6 6L18 18" stroke="#101010" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                       </div>
 
                       <h3 className='absolute text-slate-200 text-4xl top-10 left-1/2 -translate-x-1/2'>Edit Profile</h3>
 
-                      <div className='absolute h-3/4 w-full flex justify-between items-center flex-col top-32'>
+                      <div className='absolute h-full w-full flex justify-center items-center flex-col gap-6'>
                         <input type='file' ref={fileRef} hidden accept='image/*' onChange={(e) => setImage(e.target.files[0])}/>
                         {/*
                           firebase storage rules: 
@@ -196,14 +220,17 @@ export default function profile() {
                             </p>
                         <input onChange={handleChange} type="text" id='username' placeholder='Username'  defaultValue={ currentUser.username } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
                         <input onChange={handleChange} type="text" id='email' placeholder='Email' defaultValue={ currentUser.email } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
-                        <input onChange={handleChange} type="password" id='password' placeholder='Password' className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
-                        <input onChange={handleChange} type="text" placeholder='About Me' defaultValue={ currentUser.aboutMe } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
+                        <input onChange={handleChange} type="text" id='aboutme' placeholder='About Me' defaultValue={ currentUser.aboutMe } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
                         <button className='w-2/3 h-12 bg-slate-950 rounded-xl text-slate-200 scale-95 hover:bg-slate-900 hover:scale-100 hover:shadow-lightBright transition-all duration-150'>{ loading ? 'Loading...' : 'Save changes' }</button>
                         <p className='absolute bottom-0 translate-y-8 text-red-500 mt-5'>{error && 'Something went wrong'}</p>
                         <p className='absolute bottom-0 translate-y-8 text-green-500 mt-5'>{updateSuccess && 'User is updated successfully'}</p>
                       </div>
+
+                     
                   
                   </form>
+                
+                </div>
 
               </div>
           </div>

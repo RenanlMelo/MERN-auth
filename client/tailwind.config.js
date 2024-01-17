@@ -13,6 +13,7 @@ module.exports = {
         'lightBright': '0px 0px 10px rgba(250, 250, 250, 0.75)',
         'edit': '0px 0px 15px rgba(37, 99, 235, 0.75)',
         'singOut': '0px 0px 15px rgba(239, 68, 68, 0.75)',
+        'bottom': 'inset 0 -10px 40px rgba(10, 10, 10, .6)',
       },
       
       dropShadow: {
