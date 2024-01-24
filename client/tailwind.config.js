@@ -46,6 +46,10 @@ module.exports = {
       slideOut: 'slideOut ease-in-out .35s',
      },
       
+     right: {
+      umQuinto: ''
+     }
+
     }, //extend
   }, //theme
   plugins: [],

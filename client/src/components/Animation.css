@@ -1,0 +1,106 @@
+.bg-transition {
+  visibility: hidden; 
+  display: none;
+}
+
+.slide-in-left {
+  transform: translateX(0%);
+  transition: transform .75s ease-in-out;
+}
+
+.slide-in-right {
+  transform: translateX(100%);
+  transition: transform .75s ease-in-out;
+}
+
+.slide2-in-left {
+  transform: translateX(0%) translateY(-50%);
+  transition: transform .75s;
+}
+
+.slide2-in-right {
+  transform: translateX(100%) translateY(-50%);
+  transition: transform .75s;
+}
+
+.slide-close {
+  transform: translateX(230%) translateY(-50%);
+  transition: transform .75s ;
+}
+
+.push {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .35s ease-in-out;
+}
+
+.pull {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0s ease-in-out .75s, visibility .0s ease-in-out .75s;
+}
+
+.custom-shape-1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-1 svg {
+    position: relative;
+    display: block;
+    width: 100vw;
+    height: 150px;
+}
+
+.custom-shape-1 .shape-fill {
+    fill: #3B215261;
+}
+
+
+.custom-shape-2 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-2 svg {
+    position: relative;
+    display: block;
+    width: 100vw;
+    height: 120px;
+}
+
+.custom-shape-2 .shape-fill {
+    fill: #3B215261;
+}
+
+
+.custom-shape-3 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-3 svg {
+    position: relative;
+    display: block;
+    width: 100vw;
+    height: 200px;
+}
+
+.custom-shape-3 .shape-fill {
+    fill: #3B215261;
+}

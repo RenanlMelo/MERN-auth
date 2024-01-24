@@ -78,8 +78,8 @@ export default function signUp() {
         </svg>
       </div>
     
-      <div className='absolute w-4/12 h-2/3 drop-shadow-4xl right-96 bottom-0 mix-blend-hard-light opacity-80'>
-        <svg viewBox="0 0 170 170" xmlns="http://www.w3.org/2000/svg" style={{ filter: "url(#drop-shadow2)" }}>
+      <div className='absolute w-4/12 h-2/3 drop-shadow-4xl right-96 bottom-24 mix-blend-hard-light opacity-80'>
+        <svg viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg" style={{ filter: "url(#drop-shadow2)" }}>
         <defs>
             <filter id="drop-shadow2" height="130%">
               <feGaussianBlur in="SourceAlpha" stdDeviation="30" />
@@ -93,7 +93,7 @@ export default function signUp() {
               </feMerge>
             </filter>
           </defs>
-        <path fill="url(#gradiente2)" transform="translate(85 85)">
+        <path fill="url(#gradiente2)" transform="translate(95 95)">
           <animate attributeName='d' dur='30000ms' repeatCount='indefinite' values='M60.6,-55.4C76.7,-44.5,86.7,-22.3,85.5,-1.2C84.2,19.8,71.8,39.5,55.6,53.9C39.5,68.2,19.8,77.1,3.2,73.9C-13.5,70.8,-26.9,55.6,-40,41.2C-53.1,26.9,-65.9,13.5,-66.6,-0.7C-67.4,-14.9,-56.1,-29.9,-43,-40.8C-29.9,-51.7,-14.9,-58.6,3.7,-62.3C22.3,-66,44.5,-66.4,60.6,-55.4Z";
           M40.4,-38C52.8,-28.1,63.4,-14,64,0.6C64.6,15.3,55.3,30.6,42.9,45.3C30.6,59.9,15.3,74,-0.7,74.6C-16.6,75.3,-33.3,62.6,-48.2,48C-63.1,33.3,-76.2,16.6,-76.1,0.1C-76,-16.5,-62.7,-32.9,-47.8,-42.8C-32.9,-52.6,-16.5,-55.9,-1.2,-54.7C14,-53.5,28.1,-47.8,40.4,-38Z;
           M48.1,-44.8C62.9,-33.3,76,-16.6,76.6,0.6C77.1,17.7,65.2,35.5,50.3,44.6C35.5,53.6,17.7,54,0.3,53.6C-17.1,53.3,-34.1,52.2,-46,43.2C-57.8,34.1,-64.4,17.1,-65.8,-1.4C-67.1,-19.8,-63.2,-39.5,-51.4,-51C-39.5,-62.5,-19.8,-65.8,-1.6,-64.2C16.6,-62.6,33.3,-56.3,48.1,-44.8Z;
@@ -110,6 +110,14 @@ export default function signUp() {
             </defs>
         </svg>
       </div>
+
+      <div class="custom-shape-1">
+          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 120" preserveAspectRatio="none">
+              <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+              <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+              <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+          </svg>
+        </div>
 
       <div className='px-6  max-w-xl max-h-form w-1/2 h-4/6 bg-white bg-opacity-10 relative z-20 shadow-5xl rounded-2xl backdrop-blur-sm'>
         <h1 className="text-4xl text-center font-semibold my-7 pb-3 text-slate-100">Sign Up</h1>

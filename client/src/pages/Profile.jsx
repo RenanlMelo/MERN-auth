@@ -1,76 +1,15 @@
 import { useSelector } from 'react-redux';
-import { useRef, useState, useEffect } from 'react';
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
-import { app } from '../firebase';
-import { useDispatch } from 'react-redux';
-import { updateUserStart, updateUserSuccess, updateUserFailure } from '../redux/user/userSlice';
+import { useState } from 'react';
+import Form from '../components/Form';
+import '../components/Animation.css';
 
-export default function profile() {
-  const dispatch = useDispatch();
-  const fileRef = useRef(null);
-  const [image, setImage] = useState(undefined);
-  const [imagePercent, setImagePercent] = useState(0);
-  const [imageError, setImageError] = useState(false);
-  const [formData, setFormData] = useState({});
-  const [updateSuccess, setUpdateSuccess] = useState(false);
-  const { currentUser, loading, error } = useSelector(state => state.user);
+const profile = ({}) => {
 
-  const [ isOpenPopup, setIsOpenPopup ] = useState({});
+  const { currentUser } = useSelector(state => state.user);
 
-  const [isVisible, setIsVisible] = useState({ });
-
-  useEffect(() => {
-    if (image) {
-      handleFileUpload(image);
-    }
-  }, [image]);
-  
-  const handleFileUpload = async (image) => {
-      const storage = getStorage(app)
-      const fileName = new Date().getTime() + image.name;
-      const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, image);
-
-      uploadTask.on('state_changed', (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setImagePercent(Math.round(progress));
-      },
-      (error) => {
-        setImageError(true)
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
-          setFormData({ ...formData, profilePicture: downloadURL }))
-      }
-      );
-  }; 
-  
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value});
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      if (data.success === false) {
-        dispatch(updateUserFailure(data));
-        return;
-      }
-      dispatch(updateUserSuccess(data));
-      setUpdateSuccess(true);
-    } catch (error) {
-      dispatch(updateUserFailure(error));
-    }
-  };
+  const [ isOpenPopup, setIsOpenPopup ] = useState(false);
+  const [ isOpenBg, setIsOpenBg ] = useState(false);
+  const [ isVisible, setIsVisible ] = useState(false);
 
   return (
     <div>
@@ -145,11 +84,20 @@ export default function profile() {
           </svg>
         </div>
 
+        <div className="custom-shape-3">
+          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" className="shape-fill"></path>
+              <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" className="shape-fill"></path>
+              <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" className="shape-fill"></path>
+          </svg>
+        </div>
+
+
         <div className='bg-slate-900/10 backdrop-blur-xl w-1/2 h-1/3 rounded-3xl overflow-hidden absolute shadow-lightBright text-white '>
           
           
           <div className=' bg-slate-100/15 backdrop-blur-xl w-1/3 h-full absolute top-0 flex justify-center items-center flex-col'>
-            <img src={currentUser.profilePicture} alt='Profile Picture' className='absolute top-6 rounded-full w-36 h-36 border-slate-500 border-2 z-10' />
+            <img src={ currentUser.profilePicture } alt='Profile Picture' className='absolute top-6 rounded-full w-36 h-36 border-slate-500 border-2 z-10' />
            
             <p className='absolute top-3/4 -translate-y-full left-1/2 -translate-x-1/2 text-2xl first-letter:uppercase tracking-wide pb-2'>
               { currentUser.username }
@@ -163,80 +111,24 @@ export default function profile() {
             <h2 className='absolute text-2xl top-6'>About me</h2>
             <p className='absolute top-20 text-md bg-slate-100/10 p-4 rounded-xl w-10/12'>{ currentUser.aboutMe }</p>
             <div className='absolute bottom-0 w-full h-2/6 flex justify-evenly items-center'>
-            <button onClick={setIsOpenPopup.bind(this, true)} className='text-xl text-blue-500 border-2 border-blue-600 p-2 opacity-80 rounded-sm font-semibold transition-all duration-200 hover:shadow-edit  hover:scale-110'>Edit Profile</button>
+            <button onClick={() => {setIsOpenPopup(!isOpenPopup); setIsOpenBg(!isOpenBg)}} className='text-xl text-blue-500 border-2 border-blue-600 p-2 opacity-80 rounded-sm font-semibold transition-all duration-200 hover:shadow-edit  hover:scale-110'>Edit Profile</button>
             <button className='text-xl text-red-400 border-2 border-red-500 p-2 opacity-80 rounded-sm font-semibold transition-all duration-200 hover:shadow-singOut hover:scale-110'>Sign Out</button>
             </div>
           </div>
     
         </div>
 
-        {isOpenPopup && 
+
           <div>
-              <div id='background' onClick={setIsOpenPopup.bind(this, false)} className='fixed backdrop-blur-md top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-zinc-950/50 z-30'>
-
-                <div className='font-mono relative h-screen w-screen md:grid-cols-3 row-span-2 grid justify-end items-center'>
-
-                  <div className='relative justify-self-end w-4/5 col-start-3 col-end-3 row-start-1 row-end-1 flex justify-evenly items-center -translate-y-3/4 '>
-                    
-                    {isVisible && 
-
-                      <div className='flex flex-row gap-8'>
-
-                        <div onClick={(e) => {e.stopPropagation() }}>
-                          <div onClick={(e) => {console.log("FOIIIIIIIIIIIII"); setIsVisible.bind(this, false); console.log(setIsVisible) }} className={`h-12 w-48 flex justify-center items-center bg-zinc-900 text-slate-200 rounded-t-xl hover:scale-110 transition-all shadow-bottom hover:shadow-none ${ setIsOpenPopup ? 'animate-slideIn' : 'animate-slideOut' }`}>Delete account</div>
-                           <div className={`slide-container bg-slate-500 w-96 h-96 absolute left-0 -translate-x-full ${ setIsVisible ? 'animate-slideOut' : 'animate-slideIn'}`}>Test</div>
-                        </div>
-                        
-                        <div className={`h-12 w-48 flex justify-center items-center bg-zinc-900 text-slate-200 rounded-t-xl hover:scale-110 transition-all shadow-bottom hover:shadow-none ${ setIsOpenPopup ? 'animate-slideIn' : 'animate-slideOut' }`}>Change Password</div>
-                      
-                      </div>
-                    }
-
-                  </div>
-
-                  <form onSubmit={handleSubmit} id='form' onClick={(e) => e.stopPropagation() } className={`bg-zinc-900 justify-self-end w-4/5 h-2/3 z-40 rounded-l-xl col-start-3 col-end-3 row-start-1 row-end-4 relative overflow-hidden ${ setIsOpenPopup ? 'animate-slideIn' : 'animate-slideOut' }`}>
+              
+            <Form isVisible={isVisible} setIsVisible={setIsVisible} isOpenPopup={isOpenPopup} setIsOpenPopup={setIsOpenPopup} isOpenBg={isOpenBg} setIsOpenBg={setIsOpenBg} />
                   
-                      <div onClick={setIsOpenPopup.bind(this, false)} className='bg-zinc-700 box-content aspect-square w-9 rounded-br-xl cursor-pointer z-50 hover:scale-105 transition-all duration-150 hover:bg-zinc-600 hover:translate-x-px hover:translate-y-px'>
-                          <svg viewBox="0 0 24 24" width='100%' fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><bg fill='red' /><path d="M18 6L6 18M6 6L18 18" stroke="#101010" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                      </div>
-
-                      <h3 className='absolute text-slate-200 text-4xl top-10 left-1/2 -translate-x-1/2'>Edit Profile</h3>
-
-                      <div className='absolute h-full w-full flex justify-center items-center flex-col gap-6'>
-                        <input type='file' ref={fileRef} hidden accept='image/*' onChange={(e) => setImage(e.target.files[0])}/>
-                        {/*
-                          firebase storage rules: 
-                          allow read;
-                          allow write: if
-                          request.resource.size < 2 * 1024 * 1024 &&
-                          request.resource.contentType.matches('image/.*')
-                        */}
-                            <img src={formData.profilePicture || currentUser.profilePicture} alt='profile' onClick={() => fileRef.current.click()} className='top-28 rounded-full w-36 h-36 z-10 cursor-pointer hover:scale-110 transition-all duration-150' />
-                            <p>
-                              { imageError ? (
-                                <span className='text-red-500'>Error uploading image</span>) : imagePercent > 0 && imagePercent < 100 ? (
-                                  <span className='text-slate-400'>{`Uploading: ${imagePercent}%`}</span>) : imagePercent === 100 ? (
-                                    <span className='text-green-500'>Image uploaded successfully</span>) : ( '' )}
-                            </p>
-                        <input onChange={handleChange} type="text" id='username' placeholder='Username'  defaultValue={ currentUser.username } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
-                        <input onChange={handleChange} type="text" id='email' placeholder='Email' defaultValue={ currentUser.email } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
-                        <input onChange={handleChange} type="text" id='aboutme' placeholder='About Me' defaultValue={ currentUser.aboutMe } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
-                        <button className='w-2/3 h-12 bg-slate-950 rounded-xl text-slate-200 scale-95 hover:bg-slate-900 hover:scale-100 hover:shadow-lightBright transition-all duration-150'>{ loading ? 'Loading...' : 'Save changes' }</button>
-                        <p className='absolute bottom-0 translate-y-8 text-red-500 mt-5'>{error && 'Something went wrong'}</p>
-                        <p className='absolute bottom-0 translate-y-8 text-green-500 mt-5'>{updateSuccess && 'User is updated successfully'}</p>
-                      </div>
-
-                     
-                  
-                  </form>
-                
-                </div>
-
-              </div>
           </div>
-        }
+
 
       </div>
     </div>
   )
 }
+
+export default profile;
