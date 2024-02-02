@@ -26,7 +26,6 @@ export default function OAuth() {
                 }),
             });
             const data = await res.json();
-            console.log('Data: ', data);
             dispatch(signInSuccess(data));
             navigate('/');
         } catch (error) {
@@ -35,8 +34,8 @@ export default function OAuth() {
     };
 
   return (
-    <button type='button' onClick={handleGoogleClick} className='bg-red-800 text-white text-xl rounded-lg p-3 font-semibold scale-95 
-    transition-transform duration-100 ease-in-out hover:transform hover:scale-100 hover:bg-red-950 hover:italic hover:shadow-inset'>
+    <button type='button' onClick={handleGoogleClick} className='bg-red-800 text-slate-200 text-xl rounded-lg p-3 font-semibold scale-95 
+    transition-transform duration-75 ease-linear hover:transform hover:scale-100 hover:bg-[#520404]'>
     Continue with Google</button>
   );
 }

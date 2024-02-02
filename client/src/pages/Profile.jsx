@@ -1,15 +1,28 @@
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import Form from '../components/Form';
+import { useDispatch } from 'react-redux';
+import { signOut } from '../redux/user/userSlice';  
 import '../components/Animation.css';
 
 const profile = ({}) => {
 
   const { currentUser } = useSelector(state => state.user);
 
+  const dispatch = useDispatch();
+
   const [ isOpenPopup, setIsOpenPopup ] = useState(false);
   const [ isOpenBg, setIsOpenBg ] = useState(false);
   const [ isVisible, setIsVisible ] = useState(false);
+
+  const handleSignOut = async () => {
+    try {
+      await fetch('/api/auth/signout');
+      dispatch(signOut())
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -112,7 +125,7 @@ const profile = ({}) => {
             <p className='absolute top-20 text-md bg-slate-100/10 p-4 rounded-xl w-10/12'>{ currentUser.aboutMe }</p>
             <div className='absolute bottom-0 w-full h-2/6 flex justify-evenly items-center'>
             <button onClick={() => {setIsOpenPopup(!isOpenPopup); setIsOpenBg(!isOpenBg)}} className='text-xl text-blue-500 border-2 border-blue-600 p-2 opacity-80 rounded-sm font-semibold transition-all duration-200 hover:shadow-edit  hover:scale-110'>Edit Profile</button>
-            <button className='text-xl text-red-400 border-2 border-red-500 p-2 opacity-80 rounded-sm font-semibold transition-all duration-200 hover:shadow-singOut hover:scale-110'>Sign Out</button>
+            <button onClick={handleSignOut} className='text-xl text-red-400 border-2 border-red-500 p-2 opacity-80 rounded-sm font-semibold transition-all duration-200 hover:shadow-singOut hover:scale-110'>Sign Out</button>
             </div>
           </div>
     
