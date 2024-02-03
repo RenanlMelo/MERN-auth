@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './Animation.css';
 
-const Delete = ({ currentUser, formWidth, isVisible, opacity, setOpacity, dispatch, deleteUserStart, deleteUserSuccess, deleteUserFailure }) => {
+const Delete = ({ currentUser, formWidth, setIsVisible, isVisible, opacity, setOpacity, dispatch, deleteUserStart, deleteUserSuccess, deleteUserFailure }) => {
 
   const transitionClass = isVisible ? 'slide2-in-left' : 'slide2-in-right';
   const transitionClass2 = isVisible ? 'slide-close' : '';
@@ -59,8 +59,8 @@ const Delete = ({ currentUser, formWidth, isVisible, opacity, setOpacity, dispat
     <div onClick={(e) => e.stopPropagation() }>
         <div style={{ right: `${formWidth}px`, opacity: `${opacity}` }} className={`delete-container absolute top-1/2 z-0 rounded-l-xl bg-zinc-900 flex justify-evenly item flex-col gap-4 w-3/5 h-96 p-8 text-xl shadow-bottom`}>
             <p className='text-slate-200'>Are you certain you wish to delete this account?</p>
-            <span onClick={handleDeleteAccount} className='bg-slate-950 rounded-xl text-slate-200 scale-90 hover:bg-slate-900 hover:scale-100 hover:shadow-lightBright transition-all duration-150 p-4 w-full'>Yes</span>
-            <span className='bg-slate-950 rounded-xl text-slate-200 scale-90 hover:bg-slate-900 hover:scale-100 hover:shadow-lightBright transition-all duration-150 p-4 w-full'>No</span>
+            <span onClick={handleDeleteAccount} className='bg-slate-950 rounded-xl text-center text-slate-200 scale-90 hover:bg-slate-900 hover:scale-100 hover:shadow-lightBright transition-all duration-150 p-4 w-full'>Yes</span>
+            <span onClick={() => {setIsVisible(!isVisible)}} className='bg-slate-950 rounded-xl text-center text-slate-200 scale-90 hover:bg-slate-900 hover:scale-100 hover:shadow-lightBright transition-all duration-150 p-4 w-full'>No</span>
         </div>
     </div>
   );

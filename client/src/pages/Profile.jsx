@@ -106,26 +106,27 @@ const profile = ({}) => {
         </div>
 
 
-        <div className='bg-slate-900/10 backdrop-blur-xl w-1/2 h-1/3 rounded-3xl overflow-hidden absolute shadow-lightBright text-white '>
+        <div className='bg-slate-900/10 backdrop-blur-xl w-9/12 h-auto rounded-3xl overflow-hidden absolute shadow-lightBright text-white lg:w-3/5 xl:w-1/2 md:w-3/4 flex flex-col md:flex-row md:h-1/4 lg:h-1/3'>
           
           
-          <div className=' bg-slate-100/15 backdrop-blur-xl w-1/3 h-full absolute top-0 flex justify-center items-center flex-col'>
-            <img src={ currentUser.profilePicture } alt='Profile Picture' className='absolute top-6 rounded-full w-36 h-36 border-slate-500 border-2 z-10' />
-           
-            <p className='absolute top-3/4 -translate-y-full left-1/2 -translate-x-1/2 text-2xl first-letter:uppercase tracking-wide pb-2'>
-              { currentUser.username }
-            </p> 
-            <p className='absolute text-slate-200 text-md left-1/2 -translate-x-1/2 bottom-10'>
-              { currentUser.email }
-            </p>
+          <div className='bg-slate-100/15 backdrop-blur-xl flex justify-evenly items-center flex-row md:flex-col'>
+            <img src={ currentUser.profilePicture } alt='Profile Picture' className='mx-4 md:mx-16 rounded-full w-24 h-24 border-slate-500 border-2 z-10 my-4 md:my-0 md:w-36 md:h-36' />
+            <div className='flex flex-col text-center gap-6 md:gap-0'>
+              <p className='text-xl mx-4 first-letter:uppercase tracking-wide pb-2 md:text-2xl'>
+                { currentUser.username }
+              </p> 
+              <p className='text-slate-200 mx-4  text-sm md:text-lg '>
+                { currentUser.email }
+              </p>
+            </div>
           </div>
 
-          <div className='absolute w-2/3 h-full right-0 flex justify-center items-center flex-col'>
-            <h2 className='absolute text-2xl top-6'>About me</h2>
-            <p className='absolute top-20 text-md bg-slate-100/10 p-4 rounded-xl w-10/12'>{ currentUser.aboutMe }</p>
-            <div className='absolute bottom-0 w-full h-2/6 flex justify-evenly items-center'>
-            <button onClick={() => {setIsOpenPopup(!isOpenPopup); setIsOpenBg(!isOpenBg)}} className='text-xl text-blue-500 border-2 border-blue-600 p-2 opacity-80 rounded-sm font-semibold transition-all duration-200 hover:shadow-edit  hover:scale-110'>Edit Profile</button>
-            <button onClick={handleSignOut} className='text-xl text-red-400 border-2 border-red-500 p-2 opacity-80 rounded-sm font-semibold transition-all duration-200 hover:shadow-singOut hover:scale-110'>Sign Out</button>
+          <div className='flex items-center flex-col w-full h-auto md:h-full'>
+            <h2 className='text-lg mt-10 sm:text-2xl'>About me</h2>
+            <p className='mt-6 text-md bg-slate-100/10 p-4 rounded-xl w-2/3 mb-36'>{ currentUser.aboutMe }</p>
+            <div className='flex justify-evenly items-center gap-10 absolute bottom-6 xl:gap-20 lg:bottom-10'>
+              <button onClick={() => {setIsOpenPopup(!isOpenPopup); setIsOpenBg(!isOpenBg)}} className='text-sm text-blue-500 border-2 border-blue-600 p-2 opacity-80 rounded-sm font-semibold transition-all duration-200 hover:shadow-edit  hover:scale-110 sm:text-xl'>Edit Profile</button>
+              <button onClick={handleSignOut} className='text-sm text-red-400 border-2 border-red-500 p-2 opacity-80 rounded-sm font-semibold transition-all duration-200 hover:shadow-singOut hover:scale-110 sm:text-xl'>Sign Out</button>
             </div>
           </div>
     
