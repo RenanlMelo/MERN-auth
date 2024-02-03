@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { signUpStart, signUpSuccess, signUpFailure } from '../redux/user/userSlice';
+import { useDispatch } from 'react-redux';
 import OAuth from '../components/OAuth';
 document.body.style.overflow = "hidden";
 
@@ -9,6 +11,7 @@ export default function signUp() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({...formData, [e.target.id]: e.target.value });
@@ -16,8 +19,8 @@ export default function signUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
+      dispatch(signUpStart());
       setLoading(true);
       setError(false);
       const res = await fetch('/api/auth/signup', {
@@ -32,14 +35,15 @@ export default function signUp() {
       setLoading(false);
       if(data.success === false){
         setError(true);
+        dispatch(signUpFailure());
         return;
       }
-
-      navigate('/sign-in');
-
+      dispatch(signUpSuccess(data));
+      navigate('/');
     } catch (error) {
       setLoading(false);
       setError(true);
+      dispatch(signUpFailure(error));
     }
   };
 
@@ -129,11 +133,12 @@ export default function signUp() {
           <input type="password" placeholder='Password' id='password' className='bg-zinc-800 text-slate-200 p-3 rounded-lg'onChange={handleChange}/>
 
             <button disabled={loading} className="text-xl text-slate-200 relative px-6 py-3 text-center w-1/1 transition-all ease-out disabled:opacity-60 scale-95 
-            bg-indigo-950 rounded-md hover:scale-100 hover:ease-linear hover:duration-75 hover:bg-gray-900">{loading? 'Loading...' : 'Sign Up'}
+              bg-indigo-950 rounded-md hover:scale-100 hover:ease-linear hover:duration-75 hover:bg-gray-900">{loading? 'Loading...' : 'Sign Up'}
             </button>
            <OAuth />
 
         </form>
+
         <div className='flex gap-2 mt-5'>
           <p className='text-slate-200'>Have an account</p>
           <Link to='/sign-in'>

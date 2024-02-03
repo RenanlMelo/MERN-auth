@@ -10,6 +10,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
+        //SIGN-IN
         signInStart: (state) => {
             state.loading = true;
         },
@@ -22,6 +23,24 @@ const userSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+
+        //SIGN-UP
+        signUpStart: (state) => {
+            state.loading = true;
+        },
+        signUpSuccess: (state, action) => {
+            const userData = action.payload;
+            localStorage.setItem('user', JSON.stringify(userData));
+            state.currentUser = userData;
+            state.loading = false;
+            state.error = false;
+        },
+        signUpFailure: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
+
+        //UPDATE ACCOUNT
         updateUserStart: (state) => {
             state.loading = true;
         },
@@ -34,6 +53,7 @@ const userSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        //DELETE ACCOUNT
         deleteUserStart: (state) => {
             state.loading = true;
         },
@@ -46,6 +66,7 @@ const userSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        //SIGN-OUT
         signOut: (state) => {
             state.currentUser = null;
             state.loading = false;
@@ -58,6 +79,9 @@ export const {
     signInStart, 
     signInSuccess, 
     signInFailure, 
+    signUpStart, 
+    signUpSuccess, 
+    signUpFailure, 
     updateUserStart, 
     updateUserSuccess, 
     updateUserFailure ,

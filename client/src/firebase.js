@@ -1,6 +1,7 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -9,15 +10,8 @@ const firebaseConfig = {
   projectId: "mern-auth-7d40c",
   storageBucket: "mern-auth-7d40c.appspot.com",
   messagingSenderId: "697531628779",
-  appId: "1:697531628779:web:4c853e9d3f702aaf7452ae",
-  storageRules: "storage.rules", // add this line
+  appId: "1:697531628779:web:4c853e9d3f702aaf7452ae"
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-// Initialize Firebase services
-const auth = getAuth(app);
-const storage = getStorage(app);
-
-export { app, auth, storage };
+export const app = initializeApp(firebaseConfig);

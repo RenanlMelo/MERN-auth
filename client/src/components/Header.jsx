@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { getUserData } from '../redux/user/userUtils';
 
 export default function Header() {
     const { currentUser } = useSelector((state) => state.user);
+    const userData = getUserData();
+    console.log(userData);
+
   return (
     <div className='bg-zinc-900 text-white mb-12 w-full absolute z-10 shadow-under'>
         <div className="flex justify-between items-center mas-w-6xl mx-auto p-8">

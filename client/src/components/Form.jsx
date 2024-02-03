@@ -141,9 +141,9 @@ const Form = ({ isVisible, setIsVisible, isOpenPopup, setIsOpenPopup, isOpenBg, 
                                   <span className='text-slate-400'>{`Uploading: ${imagePercent}%`}</span>) : imagePercent === 100 ? (
                                     <span className='text-green-500'>Image uploaded successfully</span>) : ( '' )}
                             </p>
-                        <input onChange={handleChange} required  maxLength={20} type="text" id='username' placeholder='Username'  defaultValue={ currentUser.username } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
-                        <input onChange={handleChange} type="text" id='email' placeholder='Email' defaultValue={ currentUser.email } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
-                        <input onChange={handleChange} maxLength={200} type="text" id='aboutme' placeholder='About Me' defaultValue={ currentUser.aboutMe } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
+                        <input onChange={handleChange} required  maxLength={20} type="text" id='username' placeholder='Username' defaultValue={ currentUser.username } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
+                        <input onChange={handleChange} required type="text" id='email' placeholder='Email' defaultValue={ currentUser.email } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
+                        <input onChange={handleChange} maxLength={200} type="text" id='aboutMe' placeholder='About Me' defaultValue={ currentUser.aboutMe } className='w-2/3 h-12 bg-slate-950 rounded-xl p-4 text-slate-200 border-thin border-slate-500'/>
                         <button className='w-2/3 h-12 bg-slate-950 rounded-xl text-slate-200 scale-95 hover:bg-slate-900 hover:scale-100 hover:shadow-lightBright transition-all duration-150'>{ loading ? 'Loading...' : 'Save changes' }</button>
                         <p className='absolute bottom-0 translate-y-8 text-red-500 mt-5'>{error && 'Something went wrong'}</p>
                         <p className='absolute bottom-0 translate-y-8 text-green-500 mt-5'>{updateSuccess && 'User is updated successfully'}</p>

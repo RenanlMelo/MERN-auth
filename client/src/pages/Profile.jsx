@@ -110,7 +110,7 @@ const profile = ({}) => {
           
           
           <div className='bg-slate-100/15 backdrop-blur-xl flex justify-evenly items-center flex-row md:flex-col'>
-            <img src={ currentUser.profilePicture } alt='Profile Picture' className='mx-4 md:mx-16 rounded-full w-24 h-24 border-slate-500 border-2 z-10 my-4 md:my-0 md:w-36 md:h-36' />
+            <img src={ currentUser.profilePicture } alt='Profile Picture' className='mx-4 md:mx-24 rounded-full w-24 h-24 border-slate-500 border-2 z-10 my-4 md:my-0 md:w-36 md:h-36' />
             <div className='flex flex-col text-center gap-6 md:gap-0'>
               <p className='text-xl mx-4 first-letter:uppercase tracking-wide pb-2 md:text-2xl'>
                 { currentUser.username }
